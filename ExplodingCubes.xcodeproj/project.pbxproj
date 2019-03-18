@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F4A65E9223EDC12000ECB62 /* ExplodingCubesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4A65E4223EDC12000ECB62 /* ExplodingCubesView.swift */; };
+		9F4A65EA223EDC12000ECB62 /* ExplodingCube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4A65E5223EDC12000ECB62 /* ExplodingCube.swift */; };
+		9F4A65EB223EDC12000ECB62 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4A65E6223EDC12000ECB62 /* Bullet.swift */; };
+		9F4A65EC223EDC12000ECB62 /* Defs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4A65E7223EDC12000ECB62 /* Defs.swift */; };
+		9F4A65ED223EDC12000ECB62 /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4A65E8223EDC12000ECB62 /* Plane.swift */; };
+		9F4A65EF223EE0C2000ECB62 /* pew.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A65EE223EE0C1000ECB62 /* pew.wav */; };
+		9F4A65F1223EE0CD000ECB62 /* tickingbomb.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A65F0223EE0CD000ECB62 /* tickingbomb.wav */; };
+		9F4A65F3223EE22C000ECB62 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A65F2223EE22C000ECB62 /* explosion.wav */; };
+		9F4A65F5223EE238000ECB62 /* explosion.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A65F4223EE238000ECB62 /* explosion.scnp */; };
+		9F4A65FD22400B1F000ECB62 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A65FC22400B1F000ECB62 /* spark.png */; };
+		9F4A65FF22400B3F000ECB62 /* score.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A65FE22400B3F000ECB62 /* score.scnp */; };
+		9F4A660322401532000ECB62 /* starttexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A660222401532000ECB62 /* starttexture.png */; };
+		9F4A660522401812000ECB62 /* floortexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A660422401812000ECB62 /* floortexture.jpg */; };
+		9F4A6607224023F5000ECB62 /* water.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A6606224023F5000ECB62 /* water.jpg */; };
+		9F4A6609224024CC000ECB62 /* extinguish.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A6608224024CC000ECB62 /* extinguish.wav */; };
+		9F4A660D224038C5000ECB62 /* dynamite.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A660C224038C5000ECB62 /* dynamite.jpg */; };
+		9F4A660F2240421E000ECB62 /* lava.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9F4A660E2240421D000ECB62 /* lava.wav */; };
 		9FF96B2C223EDAD6009E1068 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF96B2B223EDAD6009E1068 /* AppDelegate.swift */; };
 		9FF96B2E223EDAD6009E1068 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FF96B2D223EDAD6009E1068 /* art.scnassets */; };
 		9FF96B30223EDAD6009E1068 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF96B2F223EDAD6009E1068 /* ViewController.swift */; };
@@ -16,6 +33,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F4A65E4223EDC12000ECB62 /* ExplodingCubesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplodingCubesView.swift; sourceTree = "<group>"; };
+		9F4A65E5223EDC12000ECB62 /* ExplodingCube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplodingCube.swift; sourceTree = "<group>"; };
+		9F4A65E6223EDC12000ECB62 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
+		9F4A65E7223EDC12000ECB62 /* Defs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defs.swift; sourceTree = "<group>"; };
+		9F4A65E8223EDC12000ECB62 /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		9F4A65EE223EE0C1000ECB62 /* pew.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pew.wav; path = Assets.xcassets/pew.dataset/pew.wav; sourceTree = "<group>"; };
+		9F4A65F0223EE0CD000ECB62 /* tickingbomb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = tickingbomb.wav; path = Assets.xcassets/tickingbomb.dataset/tickingbomb.wav; sourceTree = "<group>"; };
+		9F4A65F2223EE22C000ECB62 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
+		9F4A65F4223EE238000ECB62 /* explosion.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = explosion.scnp; sourceTree = "<group>"; };
+		9F4A65FC22400B1F000ECB62 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		9F4A65FE22400B3F000ECB62 /* score.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = score.scnp; sourceTree = "<group>"; };
+		9F4A660222401532000ECB62 /* starttexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = starttexture.png; sourceTree = "<group>"; };
+		9F4A660422401812000ECB62 /* floortexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = floortexture.jpg; sourceTree = "<group>"; };
+		9F4A6606224023F5000ECB62 /* water.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = water.jpg; sourceTree = "<group>"; };
+		9F4A6608224024CC000ECB62 /* extinguish.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = extinguish.wav; sourceTree = "<group>"; };
+		9F4A660C224038C5000ECB62 /* dynamite.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dynamite.jpg; sourceTree = "<group>"; };
+		9F4A660E2240421D000ECB62 /* lava.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lava.wav; sourceTree = "<group>"; };
 		9FF96B28223EDAD6009E1068 /* ExplodingCubes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExplodingCubes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FF96B2B223EDAD6009E1068 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FF96B2D223EDAD6009E1068 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -56,6 +90,23 @@
 		9FF96B2A223EDAD6009E1068 /* ExplodingCubes */ = {
 			isa = PBXGroup;
 			children = (
+				9F4A660E2240421D000ECB62 /* lava.wav */,
+				9F4A660C224038C5000ECB62 /* dynamite.jpg */,
+				9F4A6608224024CC000ECB62 /* extinguish.wav */,
+				9F4A6606224023F5000ECB62 /* water.jpg */,
+				9F4A660422401812000ECB62 /* floortexture.jpg */,
+				9F4A660222401532000ECB62 /* starttexture.png */,
+				9F4A65FE22400B3F000ECB62 /* score.scnp */,
+				9F4A65FC22400B1F000ECB62 /* spark.png */,
+				9F4A65F4223EE238000ECB62 /* explosion.scnp */,
+				9F4A65F2223EE22C000ECB62 /* explosion.wav */,
+				9F4A65F0223EE0CD000ECB62 /* tickingbomb.wav */,
+				9F4A65EE223EE0C1000ECB62 /* pew.wav */,
+				9F4A65E6223EDC12000ECB62 /* Bullet.swift */,
+				9F4A65E7223EDC12000ECB62 /* Defs.swift */,
+				9F4A65E5223EDC12000ECB62 /* ExplodingCube.swift */,
+				9F4A65E4223EDC12000ECB62 /* ExplodingCubesView.swift */,
+				9F4A65E8223EDC12000ECB62 /* Plane.swift */,
 				9FF96B2B223EDAD6009E1068 /* AppDelegate.swift */,
 				9FF96B2D223EDAD6009E1068 /* art.scnassets */,
 				9FF96B2F223EDAD6009E1068 /* ViewController.swift */,
@@ -125,7 +176,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F4A65F1223EE0CD000ECB62 /* tickingbomb.wav in Resources */,
+				9F4A660D224038C5000ECB62 /* dynamite.jpg in Resources */,
+				9F4A6609224024CC000ECB62 /* extinguish.wav in Resources */,
+				9F4A6607224023F5000ECB62 /* water.jpg in Resources */,
+				9F4A65F5223EE238000ECB62 /* explosion.scnp in Resources */,
+				9F4A65EF223EE0C2000ECB62 /* pew.wav in Resources */,
+				9F4A660322401532000ECB62 /* starttexture.png in Resources */,
+				9F4A65F3223EE22C000ECB62 /* explosion.wav in Resources */,
+				9F4A660F2240421E000ECB62 /* lava.wav in Resources */,
+				9F4A65FF22400B3F000ECB62 /* score.scnp in Resources */,
 				9FF96B2E223EDAD6009E1068 /* art.scnassets in Resources */,
+				9F4A660522401812000ECB62 /* floortexture.jpg in Resources */,
+				9F4A65FD22400B1F000ECB62 /* spark.png in Resources */,
 				9FF96B38223EDAD8009E1068 /* LaunchScreen.storyboard in Resources */,
 				9FF96B35223EDAD8009E1068 /* Assets.xcassets in Resources */,
 				9FF96B33223EDAD6009E1068 /* Main.storyboard in Resources */,
@@ -140,7 +203,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FF96B30223EDAD6009E1068 /* ViewController.swift in Sources */,
+				9F4A65E9223EDC12000ECB62 /* ExplodingCubesView.swift in Sources */,
+				9F4A65EB223EDC12000ECB62 /* Bullet.swift in Sources */,
+				9F4A65EC223EDC12000ECB62 /* Defs.swift in Sources */,
 				9FF96B2C223EDAD6009E1068 /* AppDelegate.swift in Sources */,
+				9F4A65EA223EDC12000ECB62 /* ExplodingCube.swift in Sources */,
+				9F4A65ED223EDC12000ECB62 /* Plane.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
