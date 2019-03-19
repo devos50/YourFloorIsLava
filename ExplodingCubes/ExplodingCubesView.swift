@@ -2,6 +2,11 @@ import ARKit
 import Foundation
 import UIKit
 
+protocol CubeDelegate
+{
+    func didExplode()
+}
+
 @available(iOS 11.0, *)
 public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContactDelegate
 {
@@ -13,7 +18,7 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
     var bulletTimer: Timer?
     var didStartGame = false
     var activePlane: Plane?
-    var blockSpawnTimer: Timer?
+    var score = 0
     
     var timeLeftLabel: UILabel?
     var scoreLabel: UILabel?
@@ -54,7 +59,6 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
         
         // add labels
         self.scoreLabel = UILabel(frame: CGRect(x: self.frame.size.width - 100, y: 30, width: 100, height: 30))
-        scoreLabel?.text = "Score: 3"
         scoreLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         scoreLabel?.isHidden = true
         scoreLabel?.textColor = UIColor.white
@@ -73,6 +77,8 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
         findPlaneLabel?.textAlignment = .center
         findPlaneLabel?.textColor = UIColor.white
         self.addSubview(self.findPlaneLabel!)
+        
+        self.updateLabels()
     }
     
     func getUserVector() -> (SCNVector3, SCNVector3)
@@ -146,16 +152,7 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
                         }
                         
                         self.didStartGame = true
-                        self.blockSpawnTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { (timer: Timer) in
-                            // add cube
-                            let cube = ExplodingCube()
-                            let position = self.activePlane!.planeAnchor.transform
-                            cube.position = SCNVector3(position.columns.3.x, position.columns.3.y + 0.8, position.columns.3.z)
-                            self.scene.rootNode.addChildNode(cube)
-                        })
-                        hit.node.runAction(SCNAction.repeatForever(SCNAction.playAudio(SCNAudioSource(named: "lava.wav")!, waitForCompletion: true)))
-                        hit.node.geometry?.materials[0].diffuse.contents = UIImage(named: "floortexture.jpg")
-                        self.activePlane?.fireNode.removeFromParentNode()
+                        self.activePlane?.startGame()
                         
                         // show labels
                         self.scoreLabel?.isHidden = false
@@ -165,32 +162,6 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
                 }
             }
         }
-        
-        
-//        let hits = self.hitTest(sender.location(in: self), options: [SCNHitTestOption.categoryBitMask: 4])
-//        for hit in hits
-//        {
-//            if hit.node.name == "cube"
-//            {
-//                // go out with a blast
-//                let particleSystem = SCNParticleSystem(named: "explosion", inDirectory: nil)
-//                let particleNode = SCNNode()
-//                particleNode.addParticleSystem(particleSystem!)
-//
-//                particleNode.position = SCNVector3Zero
-//                hit.node.addChildNode(particleNode)
-//
-//                hit.node.parent?.runAction(SCNAction.playAudio(SCNAudioSource(fileNamed: "explosion.wav")!, waitForCompletion: false))
-//                hit.node.runAction(SCNAction.sequence([SCNAction.wait(duration: 0.3), SCNAction.removeFromParentNode()]))
-//            }
-//        }
-        
-        
-//        let bulletsNode = Bullet()
-//        bulletsNode.position = (self.pointOfView?.position)!
-//        bulletsNode.physicsBody?.applyForce(projectedDirection(pt: sender.location(in: self)), asImpulse: true)
-//        self.scene.rootNode.addChildNode(bulletsNode)
-//        bulletsNode.runAction(SCNAction.sequence([SCNAction.playAudio(SCNAudioSource(fileNamed: "pew.wav")!, waitForCompletion: false), SCNAction.wait(duration: 3), SCNAction.removeFromParentNode()]))
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor)
@@ -215,7 +186,6 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
         {
             let plane = Plane(anchor)
             node.addChildNode(plane.node)
-            node.addChildNode(plane.fireNode)
             //node.addChildNode(plane.wallNode)
             planes[anchor] = plane
         }
@@ -241,17 +211,25 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
             cube.parent?.runAction(SCNAction.playAudio(SCNAudioSource(fileNamed: "extinguish.wav")!, waitForCompletion: false))
             cube.removeFromParentNode()
             
-            let particleSystem = SCNParticleSystem(named: "score", inDirectory: nil)
-            let particleNode = SCNNode()
-            particleNode.addParticleSystem(particleSystem!)
-            particleNode.position = bullet.presentation.position
-            self.scene.rootNode.addChildNode(particleNode)
+//            let particleSystem = SCNParticleSystem(named: "score", inDirectory: nil)
+//            let particleNode = SCNNode()
+//            particleNode.addParticleSystem(particleSystem!)
+//            particleNode.position = bullet.presentation.position
+//            self.scene.rootNode.addChildNode(particleNode)
+            
+            self.score += 1
+            self.updateLabels()
         }
         else if (contact.nodeA.name == "plane" && contact.nodeB.name == "cube") || (contact.nodeA.name == "cube" && contact.nodeB.name == "plane")
         {
             let cube = contact.nodeA.name == "plane" ? (contact.nodeB as? ExplodingCube) : (contact.nodeA as? ExplodingCube)
             if !cube!.isTicking { cube?.startTicking() }
         }
+    }
+    
+    public func updateLabels()
+    {
+        self.scoreLabel?.text = "Score: \(self.score)"
     }
     
 //    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)

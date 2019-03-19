@@ -33,7 +33,7 @@ public class ExplodingCube: SCNNode
         
         // play music
         let musicSource = SCNAudioSource(fileNamed: "tickingbomb.wav")!
-        musicSource.volume = 0.08
+        musicSource.volume = 0.3
         self.runAction(SCNAction.repeatForever(SCNAction.playAudio(musicSource, waitForCompletion: true)))
         
         self.isTicking = true
@@ -60,12 +60,12 @@ public class ExplodingCube: SCNNode
     {
         ticks += 1
         let timeLeft = self.explodeTime - Double(ticks) * 0.1
-        let n = 100 - (timeLeft / self.explodeTime * 100)
-        let red = (255 * n) / 100
-        let green = (255 * (100 - n)) / 100
+        //let n = 100 - (timeLeft / self.explodeTime * 100)
+        //let red = (255 * n) / 100
+        //let green = (255 * (100 - n)) / 100
+        
+        let color = UIColor(hue: CGFloat(timeLeft / self.explodeTime / 3), saturation: 1, brightness: 1, alpha: 1)
 
-        self.geometry?.firstMaterial?.diffuse.contents = UIColor(red: CGFloat(red / 255.0), green: CGFloat(green / 255.0), blue: CGFloat(0), alpha: 1.0)
+        self.geometry?.firstMaterial?.diffuse.contents = color
     }
-    
-    
 }
