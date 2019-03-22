@@ -16,9 +16,12 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
     var planes = [ARPlaneAnchor: Plane]()
     var canShootBullet = true
     var bulletTimer: Timer?
+    var gameTimer: Timer?
     var didStartGame = false
     var activePlane: Plane?
     var score = 0
+    var gameDuration = 60
+    var timeLeft: Int
     
     var timeLeftLabel: UILabel?
     var scoreLabel: UILabel?
@@ -26,6 +29,7 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
     
     public override init(frame: CGRect, options: [String : Any]? = nil)
     {
+        timeLeft = gameDuration
         super.init(frame: frame, options: options)
         
         initWorld()
@@ -33,6 +37,7 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
     
     required public init?(coder aDecoder: NSCoder)
     {
+        timeLeft = gameDuration
         super.init(coder: aDecoder)
         
         initWorld()
@@ -46,11 +51,10 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
         self.scene = scene
         self.delegate = self
         
+        self.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showPhysicsShapes];
+        
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
-        
-        self.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints];
-        
         self.session.run(configuration)
         
         // listen for taps
@@ -65,7 +69,7 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
         self.addSubview(self.scoreLabel!)
         
         self.timeLeftLabel = UILabel(frame: CGRect(x: 20, y: 30, width: self.frame.size.width - 20, height: 30))
-        timeLeftLabel?.text = "Time left: 30 sec."
+        timeLeftLabel?.text = "Time left: \(timeLeft) sec."
         timeLeftLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         timeLeftLabel?.isHidden = true
         timeLeftLabel?.textColor = UIColor.white
@@ -115,7 +119,8 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
             bulletsNode.position = (self.pointOfView?.position)!
             bulletsNode.physicsBody?.applyForce(projectedDirection(pt: sender.location(in: self)), asImpulse: true)
             self.scene.rootNode.addChildNode(bulletsNode)
-            bulletsNode.runAction(SCNAction.sequence([SCNAction.playAudio(SCNAudioSource(fileNamed: "pew.wav")!, waitForCompletion: false), SCNAction.wait(duration: 3), SCNAction.removeFromParentNode()]))
+            self.scene.rootNode.runAction(SCNAction.playAudio(SCNAudioSource(fileNamed: "pew.wav")!, waitForCompletion: false))
+            bulletsNode.runAction(SCNAction.sequence([SCNAction.wait(duration: 3), SCNAction.removeFromParentNode()]))
             self.canShootBullet = false
             bulletTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer: Timer) in
                 self.canShootBullet = true
@@ -154,10 +159,29 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
                         self.didStartGame = true
                         self.activePlane?.startGame()
                         
-                        // show labels
-                        self.scoreLabel?.isHidden = false
-                        self.timeLeftLabel?.isHidden = false
+                        // stop plane detection
+                        let configuration = ARWorldTrackingConfiguration()
+                        configuration.planeDetection = []
+                        self.session.run(configuration)
+                        
                         self.findPlaneLabel?.isHidden = true
+                        
+                        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (timer: Timer) in
+                            self.scoreLabel?.isHidden = false
+                            self.timeLeftLabel?.isHidden = false
+                            
+                            self.gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer: Timer) in
+                                self.timeLeft -= 1
+                                self.timeLeftLabel?.text = "Time left: \(self.timeLeft) sec."
+                                
+                                if self.timeLeft == 0
+                                {
+                                    self.scoreLabel?.isHidden = true
+                                    self.timeLeftLabel?.isHidden = true
+                                    self.activePlane?.stopGame()
+                                }
+                            })
+                        }
                     }
                 }
             }
@@ -186,7 +210,6 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
         {
             let plane = Plane(anchor)
             node.addChildNode(plane.node)
-            //node.addChildNode(plane.wallNode)
             planes[anchor] = plane
         }
     }
@@ -195,7 +218,6 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
     {
         if let plane = planes[anchor]
         {
-            // TODO UNCOMMENT
             plane.update(anchor)
         }
     }
@@ -217,7 +239,8 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
 //            particleNode.position = bullet.presentation.position
 //            self.scene.rootNode.addChildNode(particleNode)
             
-            self.score += 1
+            if (cube as? ExplodingCube)!.isTicking { self.score += 1 }
+            else { self.score += 2 }
             self.updateLabels()
         }
         else if (contact.nodeA.name == "plane" && contact.nodeB.name == "cube") || (contact.nodeA.name == "cube" && contact.nodeB.name == "plane")
@@ -229,7 +252,10 @@ public class ExplodingCubesView: ARSCNView, ARSCNViewDelegate, SCNPhysicsContact
     
     public func updateLabels()
     {
-        self.scoreLabel?.text = "Score: \(self.score)"
+        DispatchQueue.main.async
+        {
+            self.scoreLabel?.text = "Score: \(self.score)"
+        }
     }
     
 //    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)
